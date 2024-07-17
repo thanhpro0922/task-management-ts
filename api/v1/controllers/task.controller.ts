@@ -61,3 +61,22 @@ export const detail = async (req: Request, res: Response) => {
     });
     res.json(task);
 };
+
+export const changeStatus = async (req: Request, res: Response) => {
+    try {
+        const id: string = req.params.id;
+
+        const status: string = req.body.status;
+
+        await Task.updateOne({ _id: id }, { status: status });
+        res.json({
+            code: 200, //@@ 200 có nghĩa là thành công, để cho ô FE biết thành công và làm gì đó
+            message: "Cập nhật trạng thái thành công!",
+        });
+    } catch (error) {
+        res.json({
+            code: 400, //@@ 400 có nghĩa là lỗi, để cho ô FE biết thành công và làm gì đó
+            message: "Không tồn tại!",
+        });
+    }
+};
