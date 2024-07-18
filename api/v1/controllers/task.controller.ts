@@ -81,17 +81,12 @@ export const changeStatus = async (req: Request, res: Response) => {
     }
 };
 
-// [PATCH] /api/v1/tasks/change-multi
-
+//% [PATCH] /api/v1/tasks/change-multi
 export const changeMulti = async (req: Request, res: Response) => {
     try {
         const ids: string[] = req.body.ids;
         const key: string = req.body.key;
         const value: string = req.body.value;
-
-        console.log(ids);
-        console.log(key);
-        console.log(value);
 
         switch (key) {
             case "status":
@@ -119,6 +114,26 @@ export const changeMulti = async (req: Request, res: Response) => {
         res.json({
             code: 400,
             message: "Không tồn tại!",
+        });
+    }
+};
+
+//% [POST] /api/v1/tasks/create
+export const create = async (req: Request, res: Response) => {
+    try {
+        const product = new Task(req.body);
+
+        const data = await product.save();
+
+        res.json({
+            code: 200,
+            message: "Tạo thành công!",
+            data: data,
+        });
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Lỗi!",
         });
     }
 };
