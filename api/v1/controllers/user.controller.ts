@@ -68,18 +68,11 @@ export const login = async (req: Request, res: Response) => {
     });
 };
 
-//% [POST] /api/v1/users/detail/:id
+//% [GET] /api/v1/users/detail
 
 export const detail = async (req: Request, res: Response) => {
-    const id: string = req.params.id;
-
-    const user = await User.findOne({
-        _id: id,
-        deleted: false,
-    }).select("-password -token");
-
     res.json({
         code: 200,
-        info: user,
+        info: req["user"],
     });
 };
